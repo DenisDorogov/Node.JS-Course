@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node cli.js",
     "dev": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "reader": "cli.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +22,8 @@
   },
   "homepage": "https://github.com/DenisDorogov/Node.JS-Course#readme",
   "dependencies": {
-    "colors": "^1.4.0"
+    "colors": "^1.4.0",
+    "inquirer": "^8.2.0",
+    "yargs": "^17.2.1"
   }
 }
