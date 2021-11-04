@@ -68,21 +68,37 @@ const inquirer = require('inquirer');
 // })()
 const executionDir = process.cwd();
 const isFile = (fileName) => fs.lstatSync(fileName).isFile();
-const list = fs.readdirSync('./').filter(isFile);
+let list = fs.readdirSync('./')//.filter(isFile);
+console.log(list);
 
-inquirer.prompt([
-    {
-        name: 'fileName',
-        type: 'list', // input, number, confirm, list, checkbox, password
-        message: 'Choose a file to read',
-        choices: list,
-    },
-])
-    .then(({ fileName }) => {
-        const fullPath = path.join(executionDir, fileName);
-
-        fs.readFile(fullPath, 'utf-8', (err, data) => {
-            if (err) console.log(err);
-            else console.log(data);
+function choiceFile(list) {
+    
+    inquirer.prompt([
+        {
+            name: 'fileName',
+            type: 'list', // input, number, confirm, list, checkbox, password
+            message: 'Choose a file to read',
+            choices: list,
+        },
+    ])
+        .then(({ fileName }) => {
+            // console.log(typeof(fileName));
+            if (isFile(fileName)) {
+                const fullPath = path.join(executionDir, fileName);
+    
+                fs.readFile(fullPath, 'utf-8', (err, data) => {
+                if (err) console.log(err);
+                else console.log(data);
+            });
+            } else {
+                
+                console.log('./' + fileName);
+               choiceFile(fs.readdirSync('./' + fileName + '/'));
+            };
+            
         });
-    });
+};
+
+choiceFile(list);
+
+
