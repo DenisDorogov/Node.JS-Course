@@ -1,9 +1,11 @@
 const fs =  require('fs');
-// const path = require('path');
+const path = require('path');
 const http = require('http');
 const url = require('url');
 let currentDir = '.';
 let list = fs.readdirSync(currentDir);
+let readStream;
+let pathFile;
 
 // const executionDir = process.cwd();
 const isFile = (fileName) => fs.lstatSync(fileName).isFile();
@@ -19,19 +21,19 @@ function outputDir(res, path) {
 };
 
 function choiceFile(res, fileName) {
-            let pathFile = currentDir + fileName;
+            pathFile = currentDir + fileName;
             console.log('pathFile: ', pathFile);
             if (isFile(pathFile)) {
-                // const fullPath = path.join(executionDir, fileName);
-                // fs.readFile(fullPath, 'utf-8', (err, data) => {
-                // if (err) console.log(err);
-                // else console.log(data);
-                // dataString = data;
-                console.log('Open file: ', pathFile);
-
+                // console.log('isFile', isFile(pathFile));
+                pathFile = path.join(__dirname, pathFile);
+                // console.log('pathFile__dirname: ', pathFile);
+                readStream = fs.createReadStream(pathFile);
+                res.writeHead(200, 'OK', {
+                    'Content-Type': 'text/html',
+                });
+                readStream.pipe(res);
             } else {
-                
-               outputDir(res, pathFile);
+                outputDir(res, pathFile);
             };
         };
 
