@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Socket</title>
     <script src="https://cdn.socket.io/4.2.0/socket.io.min.js" integrity="sha384-PiBR5S00EtOj2Lto9Uu81cmoyZqR57XcOna1oAuVuIEjzj0wpqDVfD0JA9eXlRsj" crossorigin="anonymous"></script>
+    <style>#users-online {height: 30px; font-weight: 900; padding: 20px 0px;} span {margin-left: 30px;}</style>
 </head>
 <body>
 <input id="input" type="text" autofocus>
@@ -43,7 +44,7 @@
         usersOnline.innerHTML =list;
     }) 
     socket.on('server-msg', data => {
-        messagesBlock.insertAdjacentHTML('afterbegin', `<div>${data.message}</div>`);
+        messagesBlock.insertAdjacentHTML('afterbegin', `<div><b>${data.user}</b>: ${data.message}</div>`);
     });
 </script>
 </body>

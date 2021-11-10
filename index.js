@@ -43,6 +43,7 @@ io.on('connection', client => {
         // };
         const payload = {
             message: data.message,
+            user: usersOnline[client.id]
         };
 
         client.broadcast.emit('server-msg', payload);
