@@ -8,13 +8,14 @@
 <body>
 <input id="input" type="text" autofocus>
 <button id="button">Send</button>
+<div id="users-online"></div>
 <div id="messages"></div>
 <script>
     const socket = io('localhost:5555');
     const messagesBlock = document.querySelector('#messages');
     const sendButton = document.querySelector('#button');
     const input = document.querySelector('#input');
-
+    const usersOnline = document.querySelector('#users-online');
     sendButton.onclick = () => {
         const data = {
             message: input.value,

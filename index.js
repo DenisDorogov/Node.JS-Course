@@ -2,6 +2,13 @@ const socket = require('socket.io');
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const names = ['Vasia', 'Petya,', 'Misha', 'Pavel', 'Ivan'];
+let usersOnline = {};
+
+const newUser = (id) => {
+    let name = names[Object.keys(usersOnline).length]; 
+    usersOnline[id] = name;
+};
 
 const server = http
     .createServer(((req, res) => {
@@ -13,7 +20,8 @@ const server = http
 
 const io = socket(server);
 io.on('connection', client => {
-    console.log(client.id);
+    newUser(client.id);
+    console.log(usersOnline[client.id]);
     // console.log('new connection');
     client.on('client-msg', data => {
         // console.log(data);
