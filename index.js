@@ -2,12 +2,14 @@ const socket = require('socket.io');
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const names = ['Vasia', 'Petya,', 'Misha', 'Pavel', 'Ivan'];
+const names = ['Vasia', 'Petya', 'Misha', 'Pavel', 'Ivan'];
 let usersOnline = {};
 
 const newUser = (id) => {
     let name = names[Object.keys(usersOnline).length]; 
-    usersOnline[id] = name;
+    console.log('id: ', id, typeof(id));
+    let key = String(id);
+    usersOnline[key] = name;
 };
 
 const server = http
@@ -21,8 +23,10 @@ const server = http
 const io = socket(server);
 io.on('connection', client => {
     newUser(client.id);
-    console.log(usersOnline[client.id]);
-    // console.log('new connection');
+    console.log(usersOnline);
+    client.broadcast.emit('users-online', usersOnline);
+    client.emit('users-online', usersOnline);
+
     client.on('client-msg', data => {
         // console.log(data);
         // const payload = {
