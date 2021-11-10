@@ -17,7 +17,7 @@
     const sendButton = document.querySelector('#button');
     const input = document.querySelector('#input');
     const usersOnline = document.querySelector('#users-online');
-    let arrayusers;
+    
     sendButton.onclick = () => {
         const data = {
             message: input.value,
@@ -32,13 +32,7 @@
         
     });
 
-    socket.on('disconnect', () => {
-        
-    });
-
     socket.on('users-online', (users) => {
-        console.log(users);
-        arrayusers = users;
         let list = '';
         for (key in users) {list = list + '<span> ' + users[key] + ' </span>'};
         usersOnline.innerHTML =list;
