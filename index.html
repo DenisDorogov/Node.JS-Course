@@ -30,6 +30,11 @@
     socket.on('connect', () => {
         
     });
+
+    socket.on('disconnect', () => {
+        
+    });
+
     socket.on('users-online', (users) => {
         console.log(users);
         arrayusers = users;

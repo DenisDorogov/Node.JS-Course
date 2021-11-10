@@ -21,11 +21,20 @@ const server = http
     }));
 
 const io = socket(server);
+
 io.on('connection', client => {
     newUser(client.id);
     console.log(usersOnline);
     client.broadcast.emit('users-online', usersOnline);
     client.emit('users-online', usersOnline);
+
+    client.on('disconnect', () => {
+        // console.log(client.id);
+        delete usersOnline[client.id];
+        client.broadcast.emit('users-online', usersOnline);
+        client.emit('users-online', usersOnline);
+        // console.log(usersOnline);
+    })
 
     client.on('client-msg', data => {
         // console.log(data);
